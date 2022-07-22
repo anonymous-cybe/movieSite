@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>onsite</title>
+
+    <link rel="stylesheet" href="bootstrap.min.css" />
+  </head>
+  <style>
+    #search {
+      padding: 1rem;
+      width: 30rem;
+      border: none;
+      border-radius: 20px;
+      border: 1px solid rgba(35, 100, 35, 0.774);
+      margin-top: 2rem;
+      font-size: 18px;
+    }
+    #btn1 {
+      margin-top: 14px;
+      padding: 1rem;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .watch {
+      padding: 1rem;
+
+      font-size: 18px;
+      font-weight: 800;
+      font-family: georgia;
+      width: 100%;
+    }
+  </style>
+  <body>
+    <!-- <div class="container">
+      <input
+        type="text"
+        name=""
+        class="search"
+        id="search"
+        placeholder="search"
+      />
+      <button class="btn btn-success" id="btn1">search</button>
+      
+    </div> -->
+    <div class="row"></div>
+
+    <script src="bootstrap.min.js"></script>
+    <!-- <script src="onsite.js"></script> -->
+    <script>
+      const params = new URLSearchParams(window.location.search);
+
+      const name = params.get("name");
+      alert(name);
+
+      fetch(`http://www.omdbapi.com/?apikey=f33c1400&s=${name}`)
+        .then((Response) => Response.json())
+        .then((data) => {
+          console.log(data);
+          let movies = data.Search;
+          console.log(movies);
+          for (i in movies) {
+            let div = document.createElement("div");
+            div.className = "col";
+            div.innerHTML = `  <div class="card" style="width: 18rem;">
+                  <img src="${movies[i].Poster}" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                  <h5 class="card-title text-center">${movies[i].Title}</h5>
+                    <p class="card-text text-center">
+                     ${movies[i].Year} <br/>${movies[i].Type}
+                    </p>
+                    <a href="" type="button" class="btn btn-success watch"> Watch now</a>
+                  </div>
+                </div>`;
+            document.querySelector(".row").append(div);
+          }
+        })
+
+        .catch((err) => console.log(err));
+    </script>
+  </body>
+</html>
